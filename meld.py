@@ -31,5 +31,5 @@ def meld(na, inr, tb, cr):
     m = meld_i(inr, tb, cr)
     n = na_correct(na)
     if m > 11:
-        return m + 1.32 * (137 - n) - (0.033 * m * (137 - n))
-    return m
+        m = m + 1.32 * (137 - n) - (0.033 * m * (137 - n))
+    return limit_lab(m, hi=40)
