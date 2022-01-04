@@ -55,10 +55,10 @@ WHERE inp.sta3n = 580  and AdmitDateTime > @adm_start  and AdmitDateTime < @adm_
 
 -- MELD-Na = MELD Score - Na - 0.025 x MELD x (140-Na) + 140 (don't use this formula, use the optn below)
 
--- MELD(i) = 0.957 × ln(Cr) + 0.378 × ln(bilirubin) + 1.120 × ln(INR) + 0.643
+-- MELD(i) = 0.957 * ln(Cr) + 0.378 * ln(bilirubin) + 1.120 * ln(INR) + 0.643
 --Then, round to the tenth decimal place and multiply by 10. 
 --If MELD(i) > 11, perform additional MELD calculation as follows:
---MELD = MELD(i) + 1.32 × (137 – Na) –  [ 0.033 × MELD(i) × (137 – Na) ]
+--MELD = MELD(i) + 1.32 * (137 - Na) -  [ 0.033 * MELD(i) * (137 - Na) ]
 --Additional rules:
 --All values in US units (Cr and bilirubin in mg/dL, Na in mEq/L, and INR unitless).
 --If bilirubin, Cr, or INR is <1.0, use 1.0.
