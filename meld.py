@@ -22,14 +22,15 @@ def tb_inr_correct(tb):
 
 
 def meld_i(inr, tb, cr):
-    return round((0.957 * log(cr_correct(cr)) +
-                  0.378 * log(tb_inr_correct(tb)) +
-                  1.120 * log(tb_inr_correct(inr)) + 0.643), 1) * 10
+    return (0.957 * log(cr_correct(cr)) +
+            0.378 * log(tb_inr_correct(tb)) +
+            1.120 * log(tb_inr_correct(inr)) +
+            0.643) * 10
 
 
 def meld(na, inr, tb, cr):
     m = meld_i(inr, tb, cr)
     n = na_correct(na)
-    if m > 11:
+    if m > 11:  # interesting, what if it is 10.6, should it be "pre-rounded"?
         m = m + 1.32 * (137 - n) - (0.033 * m * (137 - n))
-    return limit_lab(m, hi=40)
+    return limit_lab(round(m), hi=40)

@@ -11,4 +11,4 @@ def test_meld():
     assert meld(140, 1.2, 1.3, 1.4) == 13
     assert meld(140, 2, 3, 4) == 32
     assert meld(140, 3, 20, 4) == 40
-    # assert meld(120, 4, 4, 2.5) == 38  # round at end
+    assert meld(120, 4, 4, 2.5) == 38  # round at end
