@@ -10,7 +10,7 @@ names = ["na ", "inr", "tb ", "cr "]
 # Take smallest lab number, add 0.1, find out what fold increase that is.
 delta_factor = (min(inr, cr, tb) + 0.1) / min(inr, cr, tb)
 pct = round((delta_factor - 1) * 100, 1)
-print(pct, "percent change in each labs increases MELD by:\n")
+print(pct, "percent change in each lab increases MELD by:\n")
 
 initial_conditions = (na, inr, tb, cr)
 m1 = meld_no_rounding(*initial_conditions)
