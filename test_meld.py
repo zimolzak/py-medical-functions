@@ -23,7 +23,7 @@ def test_meld():
     assert meld(120, 4, 4, 2.5) == 38  # round at end
 
 
-def test_without_expectation():
+def test_many():
     na_range = float_range(120, 150, 2)  # 31 if step = 1
     inr_range = float_range(0.8, 4.0, 0.2)   # 41 if step = 0.1
     tb_range = float_range(0.8, 20, 0.4)   # 193  if step = 0.1
@@ -34,10 +34,10 @@ def test_without_expectation():
     p = itertools.product(na_range, inr_range, tb_range, cr_range)
     n = 0
     for my_tuple in p:
-        throw_away = meld(*my_tuple)
+        assert meld(*my_tuple) <= 40
         n += 1
     print(n, "throwaways done")
 
 
 if __name__ == '__main__':
-    test_without_expectation()  # "python test_meld.py" to see printout count.
+    test_many()  # "python test_meld.py" to see printout count.
