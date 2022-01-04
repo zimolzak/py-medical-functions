@@ -28,9 +28,14 @@ def meld_i(inr, tb, cr):
             0.643) * 10
 
 
-def meld(na, inr, tb, cr):
+def meld_no_rounding(na, inr, tb, cr):
     m = meld_i(inr, tb, cr)
     n = na_correct(na)
     if m > 11:  # interesting, what if it is 10.6, should it be "pre-rounded"?
         m = m + 1.32 * (137 - n) - (0.033 * m * (137 - n))
+    return m
+
+
+def meld(na, inr, tb, cr):
+    m = meld_no_rounding(na, inr, tb, cr)
     return limit_lab(round(m), hi=40)
