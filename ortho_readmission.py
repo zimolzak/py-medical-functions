@@ -1,3 +1,7 @@
+import numpy as np
+import pandas as pd
+
+
 def score(age_y: float, bmi: float, gender: str, dysrhythmia: bool, heart_failure: bool, discharge: str,
           ed_visits: int, psych_dx: bool, pta_med_count: float) -> float:
     """Source: Greiwe RM, Spanyer JM, Nolan JR, Rodgers RN, Hill MA, Harm RG. Improving Orthopedic Patient Outcomes:
@@ -25,7 +29,45 @@ def score(age_y: float, bmi: float, gender: str, dysrhythmia: bool, heart_failur
     return y
 
 
-beta_30 = {
+row_names = [
+    'bias',
+    'age_y',
+    'bmi',
+    'bmi ** 2',
+    '(gender == male)',
+    'dysrhythmia',
+    'heart_failure',
+    'dysrhythmia * heart_failure',
+    'disch_home_or_self',
+    'disch_facility',
+    '(ed_visits > 9)',
+    'psych_dx',
+    'pta_med_count',
+]
+
+B_list = [
+    -2.6576,
+    0.0291,
+    -0.1345,
+    0.00218,
+    0.2070,
+    -0.0505,
+    -0.3669,
+    0.7994,
+    -0.3124,
+    0.3645,
+    0.5942,
+    0.1934,
+    0.0332,
+]
+
+B_vec = np.array(B_list)
+
+B_df = pd.DataFrame(B_vec, index=row_names)
+
+print(B_df)
+
+B_dict = {
     'bias': -2.6576,
     'age_y': 0.0291,
     'bmi': -0.1345,
