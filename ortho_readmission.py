@@ -23,3 +23,20 @@ def score(age_y: float, bmi: float, gender: str, dysrhythmia: bool, heart_failur
         0.1934 * psych_dx + 0.0332 * pta_med_count
 
     return y
+
+
+beta_30 = {
+    'bias': -2.6576,
+    'age_y': 0.0291,
+    'bmi': -0.1345,
+    'bmi ** 2': 0.00218,
+    '(gender == male)': 0.2070,
+    'dysrhythmia': -0.0505,
+    'heart_failure': -0.3669,
+    'dysrhythmia * heart_failure': 0.7994,
+    'disch_home_or_self': -0.3124,
+    'disch_facility': 0.3645,
+    '(ed_visits > 9)': 0.5942,
+    'psych_dx': 0.1934,
+    'pta_med_count': 0.0332,
+}
