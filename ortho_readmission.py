@@ -71,7 +71,6 @@ B_list = [
 def score_90(age_y: float, bmi: float, gender: str, dysrhythmia: bool, heart_failure: bool, discharge: str,
              ed_visits: int, psych_dx: bool, pta_med_count: float,
              drug_abuse_dx, narcotic_meds, tja_within_past_12_mo) -> float:
-
     y = -0.5527 - 0.0903 * bmi + 0.00145 * bmi ** 2 + 0.2241 * (gender == 'male') - 0.1169 * dysrhythmia - \
         0.1284 * heart_failure + 0.7544 * dysrhythmia * heart_failure - \
         0.2464 * (discharge == 'home' or discharge == 'self-care') + 0.3233 * (discharge == 'facility') + \
@@ -82,11 +81,35 @@ def score_90(age_y: float, bmi: float, gender: str, dysrhythmia: bool, heart_fai
     return y
 
 
-B_vec = np.array(B_list)
+C_list = [
+    -0.5527,
+    0,        # age
+    -0.0903,  # bmi
+    0.00145,  # bmi ** 2
+    0.2241,  # (gender == 'male')
+    -0.1169,  # dysrhythmia
+    -0.1284,  # heart_failure
+    0.7544,  # dysrhythmia * heart_failure
+    -0.2464,  # (discharge == 'home' or discharge == 'self-care')
+    0.3233,  # (discharge == 'facility')
+    0.3325,  # (ed_visits > 9)
+    0,       # psych dx
+    0.0193,  # pta_med_count
+    0.2475,  # drug_abuse_dx
+    0.1296,  # narcotic_meds
+    -0.3820,  # tja_within_past_12_mo
 
+]
+
+
+B_vec = np.array(B_list)
+C_vec = np.array(C_list)
 B_df = pd.DataFrame(B_vec, index=row_names)
+C_df = pd.DataFrame(C_vec, index=row_names)
 
 print(B_df)
+print('----\n\n\n')
+print(C_df)
 
 B_dict = {
     'bias': -2.6576,
