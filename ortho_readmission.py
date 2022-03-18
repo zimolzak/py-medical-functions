@@ -67,26 +67,6 @@ def score(age_y: float, bmi: float, gender: str, dysrhythmia: bool, heart_failur
     return y
 
 
-B_list = [
-    -2.6576,
-    0.0291,
-    -0.1345,
-    0.00218,
-    0.2070,
-    -0.0505,
-    -0.3669,
-    0.7994,
-    -0.3124,
-    0.3645,
-    0.5942,
-    0.1934,
-    0.0332,
-    0,
-    0,
-    0,
-]
-
-
 def score_90(age_y: float, bmi: float, gender: str, dysrhythmia: bool, heart_failure: bool, discharge: str,
              ed_visits: int, psych_dx: bool, pta_med_count: float,
              drug_abuse_dx, narcotic_meds, tja_within_past_12_mo) -> float:
@@ -98,31 +78,6 @@ def score_90(age_y: float, bmi: float, gender: str, dysrhythmia: bool, heart_fai
         0.1296 * narcotic_meds + 0.0193 * pta_med_count - 0.3820 * tja_within_past_12_mo
 
     return y
-
-
-C_list = [
-    -0.5527,
-    0,  # age
-    -0.0903,  # bmi
-    0.00145,  # bmi ** 2
-    0.2241,  # (gender == 'male')
-    -0.1169,  # dysrhythmia
-    -0.1284,  # heart_failure
-    0.7544,  # dysrhythmia * heart_failure
-    -0.2464,  # (discharge == 'home' or discharge == 'self-care')
-    0.3233,  # (discharge == 'facility')
-    0.3325,  # (ed_visits > 9)
-    0,  # psych dx
-    0.0193,  # pta_med_count
-    0.2475,  # drug_abuse_dx
-    0.1296,  # narcotic_meds
-    -0.3820,  # tja_within_past_12_mo
-]
-
-B_vec = np.array(B_list)
-C_vec = np.array(C_list)
-B_df = list_to_dataframe(B_list)
-C_df = list_to_dataframe(C_list)
 
 
 class Patient:
@@ -142,26 +97,10 @@ class Patient:
         # self.narcotic_meds = narcotic_meds
         # self.tja_within_past_12_mo = tja_within_past_12_mo
         self.x_vector = [1, age_y, bmi, bmi ** 2, gender == 'male', dysrhythmia,
-                         heart_failure, discharge == 'home' or discharge == 'self-care', discharge == 'facility',
+                         heart_failure, dysrhythmia and heart_failure,
+                         discharge == 'home' or discharge == 'self-care', discharge == 'facility',
                          ed_visits > 9, psych_dx, pta_med_count, drug_abuse_dx, narcotic_meds, tja_within_past_12_mo]
 
-
-mod30 = Model(-2.6576,
-              0.0291,
-              -0.1345,
-              0.00218,
-              0.2070,
-              -0.0505,
-              -0.3669,
-              0.7994,
-              -0.3124,
-              0.3645,
-              0.5942,
-              0.1934,
-              0.0332,
-              0,
-              0,
-              0)
 
 mod90 = Model(
     -0.5527,
@@ -181,3 +120,31 @@ mod90 = Model(
     0.1296,  # narcotic_meds
     -0.3820  # tja_within_past_12_mo
 )
+
+
+mod30 = Model(-2.6576,
+              0.0291,
+              -0.1345,
+              0.00218,
+              0.2070,
+              -0.0505,
+              -0.3669,
+              0.7994,
+              -0.3124,
+              0.3645,
+              0.5942,
+              0.1934,
+              0.0332,
+              0,
+              0,
+              0)
+
+
+p = Patient(65, 30, 'male', True, True, 'home', 3, False, 5, False, True, False)
+
+print(p.x_vector)
+print(len(p.x_vector))
+print(mod30.as_list)
+print(len(mod30.as_list))
+
+print(np.dot(p.x_vector, mod30.as_list))
