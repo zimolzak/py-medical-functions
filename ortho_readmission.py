@@ -43,6 +43,9 @@ row_names = [
     '(ed_visits > 9)',
     'psych_dx',
     'pta_med_count',
+    'drug_abuse_dx',
+    'narcotic_meds',
+    'TJA within past yr',
 ]
 
 B_list = [
@@ -59,7 +62,12 @@ B_list = [
     0.5942,
     0.1934,
     0.0332,
+    0,
+    0,
+    0,
 ]
+
+
 
 B_vec = np.array(B_list)
 
@@ -82,3 +90,4 @@ B_dict = {
     'psych_dx': 0.1934,
     'pta_med_count': 0.0332,
 }
+
