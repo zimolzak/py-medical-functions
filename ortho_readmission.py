@@ -1,6 +1,40 @@
 import numpy as np
 import pandas as pd
 
+row_names = [
+    'bias',
+    'age_y',
+    'bmi',
+    'bmi ** 2',
+    '(gender == male)',
+    'dysrhythmia',
+    'heart_failure',
+    'dysrhythmia * heart_failure',
+    'disch_home_or_self',
+    'disch_facility',
+    '(ed_visits > 9)',
+    'psych_dx',
+    'pta_med_count',
+    'drug_abuse_dx',
+    'narcotic_meds',
+    'TJA within past yr',
+]
+
+
+def list_to_dataframe(mylist: list) -> pd.DataFrame:
+    return pd.DataFrame(mylist, index=row_names)
+
+
+def params_to_dataframe(bias: float, age_y: float, bmi: float, gender: float, dysrhythmia: float, heart_failure: float,
+                        discharge: float, ed_visits: float, psych_dx: float, pta_med_count: float,
+                        drug_abuse_dx: float,
+                        narcotic_meds: float,
+                        tja_within_past_yr: float
+                        ) -> pd.DataFrame:
+    mylist = [bias, age_y, bmi, gender, dysrhythmia, heart_failure, discharge, ed_visits, psych_dx, pta_med_count,
+              drug_abuse_dx, narcotic_meds, tja_within_past_yr]
+    return list_to_dataframe(mylist)
+
 
 def score(age_y: float, bmi: float, gender: str, dysrhythmia: bool, heart_failure: bool, discharge: str,
           ed_visits: int, psych_dx: bool, pta_med_count: float) -> float:
@@ -28,25 +62,6 @@ def score(age_y: float, bmi: float, gender: str, dysrhythmia: bool, heart_failur
 
     return y
 
-
-row_names = [
-    'bias',
-    'age_y',
-    'bmi',
-    'bmi ** 2',
-    '(gender == male)',
-    'dysrhythmia',
-    'heart_failure',
-    'dysrhythmia * heart_failure',
-    'disch_home_or_self',
-    'disch_facility',
-    '(ed_visits > 9)',
-    'psych_dx',
-    'pta_med_count',
-    'drug_abuse_dx',
-    'narcotic_meds',
-    'TJA within past yr',
-]
 
 B_list = [
     -2.6576,
@@ -83,7 +98,7 @@ def score_90(age_y: float, bmi: float, gender: str, dysrhythmia: bool, heart_fai
 
 C_list = [
     -0.5527,
-    0,        # age
+    0,  # age
     -0.0903,  # bmi
     0.00145,  # bmi ** 2
     0.2241,  # (gender == 'male')
@@ -93,7 +108,7 @@ C_list = [
     -0.2464,  # (discharge == 'home' or discharge == 'self-care')
     0.3233,  # (discharge == 'facility')
     0.3325,  # (ed_visits > 9)
-    0,       # psych dx
+    0,  # psych dx
     0.0193,  # pta_med_count
     0.2475,  # drug_abuse_dx
     0.1296,  # narcotic_meds
@@ -101,28 +116,46 @@ C_list = [
 
 ]
 
-
 B_vec = np.array(B_list)
 C_vec = np.array(C_list)
 B_df = pd.DataFrame(B_vec, index=row_names)
 C_df = pd.DataFrame(C_vec, index=row_names)
 
-print(B_df)
-print('----\n\n\n')
-print(C_df)
 
-B_dict = {
-    'bias': -2.6576,
-    'age_y': 0.0291,
-    'bmi': -0.1345,
-    'bmi ** 2': 0.00218,
-    '(gender == male)': 0.2070,
-    'dysrhythmia': -0.0505,
-    'heart_failure': -0.3669,
-    'dysrhythmia * heart_failure': 0.7994,
-    'disch_home_or_self': -0.3124,
-    'disch_facility': 0.3645,
-    '(ed_visits > 9)': 0.5942,
-    'psych_dx': 0.1934,
-    'pta_med_count': 0.0332,
-}
+class Patient:
+    def __init__(self, age_y: float, bmi: float, gender: str, dysrhythmia: bool, heart_failure: bool, discharge: str,
+             ed_visits: int, psych_dx: bool, pta_med_count: float,
+             drug_abuse_dx: bool, narcotic_meds: bool, tja_within_past_12_mo: bool):
+        # self.age_y = age_y
+        # self.bmi = bmi
+        # self.gender = gender
+        # self.dysrhythmia = dysrhythmia
+        # self.heart_failure = heart_failure
+        # self.discharge = discharge
+        # self.ed_visits = ed_visits
+        # self.psych_dx = psych_dx
+        # self.pta_med_count = pta_med_count
+        # self.drug_abuse_dx = drug_abuse_dx
+        # self.narcotic_meds = narcotic_meds
+        # self.tja_within_past_12_mo = tja_within_past_12_mo
+        self.x_vector = [1, age_y, bmi, bmi ** 2, gender == 'male', dysrhythmia,
+                         heart_failure, discharge == 'home' or discharge == 'self-care', discharge == 'facility',
+                         ed_visits > 9, psych_dx, pta_med_count, drug_abuse_dx, narcotic_meds, tja_within_past_12_mo]
+
+    # 'bias',
+    # 'age_y',
+    # 'bmi',
+    # 'bmi ** 2',
+    # '(gender == male)',
+    # 'dysrhythmia',
+    # 'heart_failure',
+    # 'dysrhythmia * heart_failure',
+    # 'disch_home_or_self',
+    # 'disch_facility',
+    # '(ed_visits > 9)',
+    # 'psych_dx',
+    # 'pta_med_count',
+    # 'drug_abuse_dx',
+    # 'narcotic_meds',
+    # 'TJA within past yr',
+
