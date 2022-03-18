@@ -28,12 +28,13 @@ def list_to_dataframe(mylist: list) -> pd.DataFrame:
 class Model:
     def __init__(self, bias: float, age_y: float, bmi: float, bmisq, gender: float, dysrhythmia: float,
                  heart_failure: float, dys_hf_interaction,
-                 discharge_home_self: float, discharge_facility, ed_visits: float, psych_dx: float, pta_med_count: float,
+                 discharge_home_self: float, discharge_facility, ed_visits: float, psych_dx: float,
+                 pta_med_count: float,
                  drug_abuse_dx: float,
                  narcotic_meds: float,
                  tja_within_past_yr: float):
-        self.as_list = [bias, age_y, bmi, bmisq, gender, dysrhythmia, heart_failure, discharge_home_self,
-                        discharge_facility, psych_dx,
+        self.as_list = [bias, age_y, bmi, bmisq, gender, dysrhythmia, heart_failure, dys_hf_interaction,
+                        discharge_home_self, discharge_facility, ed_visits, psych_dx,
                         pta_med_count,
                         drug_abuse_dx, narcotic_meds, tja_within_past_yr]
         self.as_dataframe = list_to_dataframe(self.as_list)
