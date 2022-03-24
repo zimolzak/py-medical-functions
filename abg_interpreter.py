@@ -90,6 +90,10 @@ class Region:
         # top.vertex_point
         # bottom.extreme_point
         # bottom.vertex_point
+        # if top.extreme_point[0] == bottom.extreme_point[0]:
+        #     pass
+        # elif
+        #
 
     def contains(self, point: list):
         if len(point) != 2:
@@ -99,4 +103,4 @@ class Region:
 
 
 met_acidosis_reg = Region(mac_top, mac_bot)
-print(met_acidosis_reg.contains([7.2, 8]))
+print(met_acidosis_reg.contains([7.2, 8]))  # fixme - turn this into a test
