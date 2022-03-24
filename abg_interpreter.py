@@ -22,15 +22,17 @@ class Parabola:
 
 mac_top = Parabola(7, 5, 7.35, 23, 7.2, 11)
 mac_bot = Parabola(7, 3, 7.4, 16, 7.3, 7)
-#arac
+arac_top = Parabola(7.15, 30, 7.35, 27, 7.25, 28)
+arac_bot = Parabola(7.1, 26, 7.35, 23, 7.2, 25)
 
-#crac
+#crac_top = Parabola()
+#crac_bot = Parabola()
+#mal_top = Parabola()
+#crac_bot = Parabola()
+#aral_top = Parabola()
+#crac_bot = Parabola()
+#cral_top = Parabola()
+#crac_bot = Parabola()
 
-#mal
-
-#aral
-
-#cral
-
-print(mac_top.a, mac_top.b, mac_top.c)
-print(mac_top.f(7.35))
+for p in [mac_top, mac_bot, arac_top, arac_bot]:
+    print(p.coefficients, "     @ 7.25 -->", p.f(7.25))
