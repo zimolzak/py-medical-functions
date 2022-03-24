@@ -142,9 +142,16 @@ mod30 = Model(-2.6576,
 
 p = Patient(65, 30, 'male', True, True, 'home', 3, False, 5, False, True, False)
 
+print("Patient")
 print(p.x_vector)
 print(len(p.x_vector))
+print()
+
+print("Model")
 print(mod30.as_list)
 print(len(mod30.as_list))
+print()
 
 print(np.dot(p.x_vector, mod30.as_list))
+
+print(score(65, 30, 'male', True, True, 'home', 3, False, 5))
