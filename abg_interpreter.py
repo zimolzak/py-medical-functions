@@ -39,7 +39,7 @@ MACT = [7, 5]
 MACB = [7, 3]
 ARACT = [7.15, 30]
 ARACB = [7.1, 26]
-CRACT = None
+CRACT = [7.325, 54]
 CRACB = None
 MALT = None
 MALB = None
@@ -54,17 +54,17 @@ mac_bot = Parabola(MACB, D, [7.3, 7])
 arac_top = Parabola(ARACT, F, [7.25, 28])
 arac_bot = Parabola(ARACB, E, [7.2, 25])
 
-#crac_top = Parabola(CRACT, )
-#crac_bot = Parabola(CRACB, )
+crac_top = Parabola(CRACT, A, [7.4, 45])
+#crac_bot = Parabola(CRACB, F, [None, None])
 
-#mal_top = Parabola(MALT, )
-#mal_bot = Parabola(MALB, )
+#mal_top = Parabola(MALT, A, [None, None])
+#mal_bot = Parabola(MALB, B, [None, None])
 
-#aral_top = Parabola(ARALT, )
-#aral_bot = Parabola(ARALB, )
+#aral_top = Parabola(ARALT, B, [None, None])
+#aral_bot = Parabola(ARALB, C, [None, None])
 
-#cral_top = Parabola(CRALT, )
-#cral_bot = Parabola(CRALB, )
+#cral_top = Parabola(CRALT, C, [None, None])
+#cral_bot = Parabola(CRALB, D, [None, None])
 
-for p in [mac_top, mac_bot, arac_top, arac_bot]:
+for p in [mac_top, mac_bot, arac_top, arac_bot, crac_top]:
     print(p.coefficients, "     @ 7.25 -->", p.f(7.25))
