@@ -81,8 +81,27 @@ for p in [mac_top, mac_bot, arac_top, arac_bot,
     print(p.coefficients, "     @ 7.35 -->", p.f(7.35))
 
 
+def cmp_func(y, behavior, f, x):
+    if behavior == 'less':
+        return y < f(x)
+    elif behavior == 'greater':
+        return y > f(x)
+    elif behavior == 'ignore':
+        return True
+    else:
+        raise ValueError
+
+
+def line_func(p1: list, p2: list):
+    assert len(p1) == len(p2) == 2
+    x1, y1, = p1
+    x2, y2 = p2
+    m = (y1 - y2) / (x1 - x2)
+    return lambda x: m * (x - x1) + y1
+
+
 class Region:
-    def __init__(self, top: Parabola, bottom: Parabola):
+    def __init__(self, top: Parabola, bottom: Parabola, ext_behavior: str, vtx_behavior: str):
         self.top_curve = top.f
         self.bottom_curve = bottom.f
         # Fixme - do something with the following:
@@ -90,17 +109,21 @@ class Region:
         # top.vertex_point
         # bottom.extreme_point
         # bottom.vertex_point
-        # if top.extreme_point[0] == bottom.extreme_point[0]:
-        #     pass
-        # elif
-        #
+
+        self.ext_line = line_func(top.extreme_point, bottom.extreme_point)
+        self.vtx_line = line_func(top.vertex_point, bottom.vertex_point)
+        self.ext_behavior = ext_behavior
+        self.vtx_behavior = vtx_behavior
 
     def contains(self, point: list):
         if len(point) != 2:
             raise IndexError
         x, y = point
-        return self.bottom_curve(x) < y < self.top_curve(x)
+        return self.bottom_curve(x) < y < self.top_curve(x) and\
+            cmp_func(y, self.ext_behavior, self.ext_line, x) and\
+            cmp_func(y, self.vtx_behavior, self.vtx_line, x)
+        # cmp_func(y, 'less', f, x)
 
 
-met_acidosis_reg = Region(mac_top, mac_bot)
+met_acidosis_reg = Region(mac_top, mac_bot, 'ignore', 'less')
 print(met_acidosis_reg.contains([7.2, 8]))  # fixme - turn this into a test
