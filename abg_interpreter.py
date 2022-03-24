@@ -25,10 +25,13 @@ class Parabola:
 
 
 # I'm naming the "vertex" points where 2 curves meet, clockwise, A-F, starting at 12 o'clock.
+# Source:
+# https://upload.wikimedia.org/wikipedia/commons/1/18/Acid-base_nomogram.svg
+# https://commons.wikimedia.org/wiki/File:Acid-base_nomogram.svg
 
 A = [7.44, 31]
-B = None
-C = None
+B = [7.46, 26]
+C = [7.46, 20]
 D = [7.4, 16]
 E = [7.35, 23]
 F = [7.35, 27]
@@ -41,12 +44,12 @@ ARACT = [7.15, 30]
 ARACB = [7.1, 26]
 CRACT = [7.325, 54]
 CRACB = [7.2, 41]
-MALT = None
-MALB = None
-ARALT = None
-ARALB = None
-CRALT = None
-CRALB = None
+MALT = [7.51, 54]
+MALB = [7.625, 54]
+ARALT = [7.73, 19]
+ARALB = [7.61, 14]
+CRALT = [7.5, 14]
+CRALB = [7.45, 12]
 
 
 mac_top = Parabola(MACT, E, [7.2, 11])
