@@ -48,26 +48,28 @@ MALT = [7.51, 54]
 MALB = [7.625, 54]
 ARALT = [7.73, 19]
 ARALB = [7.61, 14]
-CRALT = [7.5, 14]
-CRALB = [7.45, 12]
-
+CRALT = [7.5, 14]  # hard to read
+CRALB = [7.45, 12]  # hard to read
 
 mac_top = Parabola(MACT, E, [7.2, 11])
 mac_bot = Parabola(MACB, D, [7.3, 7])
+
 arac_top = Parabola(ARACT, F, [7.25, 28])
 arac_bot = Parabola(ARACB, E, [7.2, 25])
 
 crac_top = Parabola(CRACT, A, [7.4, 45])
 crac_bot = Parabola(CRACB, F, [7.25, 35])
 
-#mal_top = Parabola(MALT, A, [None, None])
-#mal_bot = Parabola(MALB, B, [None, None])
+mal_top = Parabola(MALT, A, [7.5, 46])
+mal_bot = Parabola(MALB, B, [7.6, 40])
 
-#aral_top = Parabola(ARALT, B, [None, None])
-#aral_bot = Parabola(ARALB, C, [None, None])
+aral_top = Parabola(ARALT, B, [7.6, 23])
+aral_bot = Parabola(ARALB, C, [7.55, 17])
 
-#cral_top = Parabola(CRALT, C, [None, None])
-#cral_bot = Parabola(CRALB, D, [None, None])
+cral_top = Parabola(CRALT, C, [7.475, 16])  # hard to read
+cral_bot = Parabola(CRALB, D, [7.42, 15])  # hard to read
 
-for p in [mac_top, mac_bot, arac_top, arac_bot, crac_top, crac_bot]:
-    print(p.coefficients, "     @ 7.25 -->", p.f(7.25))
+for p in [mac_top, mac_bot, arac_top, arac_bot,
+          crac_top, crac_bot, mal_top, mal_bot,
+          aral_top, aral_bot, cral_top, cral_bot]:
+    print(p.coefficients, "     @ 7.35 -->", p.f(7.35))
