@@ -9,6 +9,10 @@ class Parabola:
         Want to find coeffs a, b, c for general eqn y = a x^2 + b x + c .
         Do this by solving system (matrix eqn) M * x = n , which is a system of
         (a * x1^2) + (b * x1) + (c * 1) = y1
+
+        p should be extreme point of an ABG curve
+        q should be an interior "vertex" point
+        r should be midpoint
         """
 
         x1, y1 = p
@@ -22,6 +26,8 @@ class Parabola:
         self.coefficients = np.linalg.solve(m, n)
         self.a, self.b, self.c = self.coefficients[0], self.coefficients[1], self.coefficients[2]
         self.f = lambda x: self.a * x ** 2 + self.b * x + self.c
+        self.extreme_point = p
+        self.vertex_point = q
 
 
 # I'm naming the "vertex" points where 2 curves meet, clockwise, A-F, starting at 12 o'clock.
@@ -73,3 +79,24 @@ for p in [mac_top, mac_bot, arac_top, arac_bot,
           crac_top, crac_bot, mal_top, mal_bot,
           aral_top, aral_bot, cral_top, cral_bot]:
     print(p.coefficients, "     @ 7.35 -->", p.f(7.35))
+
+
+class Region:
+    def __init__(self, top: Parabola, bottom: Parabola):
+        self.top_curve = top.f
+        self.bottom_curve = bottom.f
+        # Fixme - do something with the following:
+        # top.extreme_point
+        # top.vertex_point
+        # bottom.extreme_point
+        # bottom.vertex_point
+
+    def contains(self, point: list):
+        if len(point) != 2:
+            raise IndexError
+        x, y = point
+        return self.bottom_curve(x) < y < self.top_curve(x)
+
+
+met_acidosis_reg = Region(mac_top, mac_bot)
+print(met_acidosis_reg.contains([7.2, 8]))
