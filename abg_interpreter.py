@@ -54,7 +54,7 @@ MALT = [7.51, 54]
 MALB = [7.625, 54]
 ARALT = [7.73, 19]
 ARALB = [7.61, 14]
-CRALT = [7.5, 14]  # hard to read
+CRALT = [7.5, 14]  # fixme - hard to read on the diagram
 CRALB = [7.45, 12]  # hard to read
 
 mac_top = Parabola(MACT, E, [7.2, 11])
@@ -75,11 +75,6 @@ aral_bot = Parabola(ARALB, C, [7.55, 17])
 cral_top = Parabola(CRALT, C, [7.475, 16])  # hard to read
 cral_bot = Parabola(CRALB, D, [7.42, 15])  # hard to read
 
-for p in [mac_top, mac_bot, arac_top, arac_bot,
-          crac_top, crac_bot, mal_top, mal_bot,
-          aral_top, aral_bot, cral_top, cral_bot]:
-    print(p.coefficients, "     @ 7.35 -->", p.f(7.35))
-
 
 def cmp_func(y, behavior, f, x):
     if behavior == 'less':
@@ -87,7 +82,7 @@ def cmp_func(y, behavior, f, x):
     elif behavior == 'greater':
         return y > f(x)
     elif behavior == 'ignore':
-        return True
+        return True  # fixme - might be wrong to do it this way
     else:
         raise ValueError
 
@@ -97,7 +92,7 @@ def line_func(p1: list, p2: list):
     x1, y1, = p1
     x2, y2 = p2
     if x1 == x2:
-        return lambda x: np.inf
+        return lambda x: np.inf  # fixme - does it have to be +/- inf?
     else:
         m = (y1 - y2) / (x1 - x2)
         return lambda x: m * (x - x1) + y1
@@ -107,12 +102,6 @@ class Region:
     def __init__(self, top: Parabola, bottom: Parabola, ext_behavior: str, vtx_behavior: str):
         self.top_curve = top.f
         self.bottom_curve = bottom.f
-        # Fixme - do something with the following:
-        # top.extreme_point
-        # top.vertex_point
-        # bottom.extreme_point
-        # bottom.vertex_point
-
         self.ext_line = line_func(top.extreme_point, bottom.extreme_point)
         self.vtx_line = line_func(top.vertex_point, bottom.vertex_point)
         self.ext_behavior = ext_behavior
@@ -125,7 +114,6 @@ class Region:
         return self.bottom_curve(x) < y < self.top_curve(x) and\
             cmp_func(y, self.ext_behavior, self.ext_line, x) and\
             cmp_func(y, self.vtx_behavior, self.vtx_line, x)
-        # cmp_func(y, 'less', f, x)
 
 
 # fixme - not sure if the ones marked 'ignore' should be that way
@@ -136,14 +124,14 @@ met_alkalosis_reg = Region(mal_top, mal_bot, 'less', 'greater')
 acute_resp_alkalosis_reg = Region(aral_top, aral_bot, 'greater', 'ignore')
 chronic_resp_alkalosis_reg = Region(cral_top, cral_bot, 'greater', 'less')
 
-
-print(met_acidosis_reg.contains([7.2, 8]))  # fixme - turn this into a test
-print(acute_resp_acidosis_reg.contains([7.125, 27]))
-print(acute_resp_acidosis_reg.contains([7.11, 28]))  # expect false
-print(chronic_resp_acidosis_reg.contains([7.35, 36]))
-print(met_alkalosis_reg.contains([7.55, 40]))
-print(acute_resp_alkalosis_reg.contains([7.6, 20]))
-print(chronic_resp_alkalosis_reg.contains([7.45, 16]))
+print("t", met_acidosis_reg.contains([7.2, 8]))  # fixme - turn this into a test
+print("t", acute_resp_acidosis_reg.contains([7.125, 27]))
+print("f", acute_resp_acidosis_reg.contains([7.11, 28]))  # expect false
+print("t", chronic_resp_acidosis_reg.contains([7.35, 36]))
+print("t", met_alkalosis_reg.contains([7.55, 40]))
+print("t", acute_resp_alkalosis_reg.contains([7.6, 20]))
+print("t", chronic_resp_alkalosis_reg.contains([7.45, 16]))
+print()
 
 REGION_DICT = {'mac': met_acidosis_reg, 'arac': acute_resp_acidosis_reg, 'crac': chronic_resp_acidosis_reg,
                'malk': met_acidosis_reg, 'aralk': acute_resp_alkalosis_reg, 'cralk': chronic_resp_alkalosis_reg}
@@ -158,12 +146,11 @@ def interpret(ph, bicarb, d=None):
     return answers
 
 
-print(interpret(7.4, 24))  # normal fixme - "ignore" should test x < > vertical line?
-print()
-print(interpret(7.2, 8))  # mac
-print(interpret(7.125, 27))  # arac
-print("    ", interpret(7.11, 28))  # extreme
-print(interpret(7.35, 36))  # crac
-print(interpret(7.55, 40))  # malk fixme does not detect
-print(interpret(7.6, 20))  # aralk fixme 3 answers
-print(interpret(7.45, 16))  # cralk
+print("norm ", interpret(7.4, 24))  # normal fixme - "ignore" should test x < > vertical line?
+print("mac  ", interpret(7.2, 8))  # mac
+print("arac ", interpret(7.125, 27))  # arac
+print("extre", interpret(7.11, 28))  # extreme
+print("crac ", interpret(7.35, 36))  # crac
+print("malk ", interpret(7.55, 40))  # malk fixme does not detect
+print("aralk", interpret(7.6, 20))  # aralk fixme 3 answers
+print("cralk", interpret(7.45, 16))  # cralk
