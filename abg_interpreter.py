@@ -96,8 +96,11 @@ def line_func(p1: list, p2: list):
     assert len(p1) == len(p2) == 2
     x1, y1, = p1
     x2, y2 = p2
-    m = (y1 - y2) / (x1 - x2)
-    return lambda x: m * (x - x1) + y1
+    if x1 == x2:
+        return lambda x: np.inf
+    else:
+        m = (y1 - y2) / (x1 - x2)
+        return lambda x: m * (x - x1) + y1
 
 
 class Region:
@@ -125,5 +128,42 @@ class Region:
         # cmp_func(y, 'less', f, x)
 
 
+# fixme - not sure if the ones marked 'ignore' should be that way
 met_acidosis_reg = Region(mac_top, mac_bot, 'ignore', 'less')
+acute_resp_acidosis_reg = Region(arac_top, arac_bot, 'less', 'ignore')
+chronic_resp_acidosis_reg = Region(crac_top, crac_bot, 'less', 'greater')
+met_alkalosis_reg = Region(mal_top, mal_bot, 'less', 'greater')
+acute_resp_alkalosis_reg = Region(aral_top, aral_bot, 'greater', 'ignore')
+chronic_resp_alkalosis_reg = Region(cral_top, cral_bot, 'greater', 'less')
+
+
 print(met_acidosis_reg.contains([7.2, 8]))  # fixme - turn this into a test
+print(acute_resp_acidosis_reg.contains([7.125, 27]))
+print(acute_resp_acidosis_reg.contains([7.11, 28]))  # expect false
+print(chronic_resp_acidosis_reg.contains([7.35, 36]))
+print(met_alkalosis_reg.contains([7.55, 40]))
+print(acute_resp_alkalosis_reg.contains([7.6, 20]))
+print(chronic_resp_alkalosis_reg.contains([7.45, 16]))
+
+REGION_DICT = {'mac': met_acidosis_reg, 'arac': acute_resp_acidosis_reg, 'crac': chronic_resp_acidosis_reg,
+               'malk': met_acidosis_reg, 'aralk': acute_resp_alkalosis_reg, 'cralk': chronic_resp_alkalosis_reg}
+
+
+def interpret(ph, bicarb, d=None):
+    if d is None:
+        d = REGION_DICT
+    answers = {}
+    for k, region in d.items():
+        answers[k] = region.contains([ph, bicarb])
+    return answers
+
+
+print(interpret(7.4, 24))  # normal fixme - "ignore" should test x < > vertical line?
+print()
+print(interpret(7.2, 8))  # mac
+print(interpret(7.125, 27))  # arac
+print("    ", interpret(7.11, 28))  # extreme
+print(interpret(7.35, 36))  # crac
+print(interpret(7.55, 40))  # malk fixme does not detect
+print(interpret(7.6, 20))  # aralk fixme 3 answers
+print(interpret(7.45, 16))  # cralk
