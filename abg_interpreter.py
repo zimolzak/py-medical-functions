@@ -111,8 +111,8 @@ class Region:
         if len(point) != 2:
             raise IndexError
         x, y = point
-        return self.bottom_curve(x) < y < self.top_curve(x) and\
-            cmp_func(y, self.ext_behavior, self.ext_line, x) and\
+        return self.bottom_curve(x) < y < self.top_curve(x) and \
+            cmp_func(y, self.ext_behavior, self.ext_line, x) and \
             cmp_func(y, self.vtx_behavior, self.vtx_line, x)
 
 
@@ -123,15 +123,6 @@ chronic_resp_acidosis_reg = Region(crac_top, crac_bot, 'less', 'greater')
 met_alkalosis_reg = Region(mal_top, mal_bot, 'less', 'greater')
 acute_resp_alkalosis_reg = Region(aral_top, aral_bot, 'greater', 'ignore')
 chronic_resp_alkalosis_reg = Region(cral_top, cral_bot, 'greater', 'less')
-
-print("t", met_acidosis_reg.contains([7.2, 8]))  # fixme - turn this into a test
-print("t", acute_resp_acidosis_reg.contains([7.125, 27]))
-print("f", acute_resp_acidosis_reg.contains([7.11, 28]))  # expect false
-print("t", chronic_resp_acidosis_reg.contains([7.35, 36]))
-print("t", met_alkalosis_reg.contains([7.55, 40]))
-print("t", acute_resp_alkalosis_reg.contains([7.6, 20]))
-print("t", chronic_resp_alkalosis_reg.contains([7.45, 16]))
-print()
 
 REGION_DICT = {'mac': met_acidosis_reg, 'arac': acute_resp_acidosis_reg, 'crac': chronic_resp_acidosis_reg,
                'malk': met_acidosis_reg, 'aralk': acute_resp_alkalosis_reg, 'cralk': chronic_resp_alkalosis_reg}
@@ -146,11 +137,21 @@ def interpret(ph, bicarb, d=None):
     return answers
 
 
-print("norm ", interpret(7.4, 24))  # normal fixme - "ignore" should test x < > vertical line?
-print("mac  ", interpret(7.2, 8))  # mac
-print("arac ", interpret(7.125, 27))  # arac
-print("extre", interpret(7.11, 28))  # extreme
-print("crac ", interpret(7.35, 36))  # crac
-print("malk ", interpret(7.55, 40))  # malk fixme does not detect
-print("aralk", interpret(7.6, 20))  # aralk fixme 3 answers
-print("cralk", interpret(7.45, 16))  # cralk
+if __name__ == '__main__':
+    print("t", met_acidosis_reg.contains([7.2, 8]))  # fixme - turn this into a test
+    print("t", acute_resp_acidosis_reg.contains([7.125, 27]))
+    print("f", acute_resp_acidosis_reg.contains([7.11, 28]))  # expect false
+    print("t", chronic_resp_acidosis_reg.contains([7.35, 36]))
+    print("t", met_alkalosis_reg.contains([7.55, 40]))
+    print("t", acute_resp_alkalosis_reg.contains([7.6, 20]))
+    print("t", chronic_resp_alkalosis_reg.contains([7.45, 16]))
+    print()
+
+    print("norm ", interpret(7.4, 24))  # normal fixme - "ignore" should test x < > vertical line?
+    print("mac  ", interpret(7.2, 8))  # mac  fixme - has malk also
+    print("arac ", interpret(7.125, 27))  # arac -  fixme aralk
+    print("extre", interpret(7.11, 28))  # extreme
+    print("crac ", interpret(7.35, 36))  # crac
+    print("malk ", interpret(7.55, 40))  # malk fixme does not detect
+    print("aralk", interpret(7.6, 20))  # aralk fixme 3 answers
+    print("cralk", interpret(7.45, 16))  # cralk
