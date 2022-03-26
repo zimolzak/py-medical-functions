@@ -24,10 +24,10 @@ def test_meld():
 
 
 def test_many():
-    na_range = float_range(120, 150, 2)  # 31 if step = 1
-    inr_range = float_range(0.8, 4.0, 0.2)   # 41 if step = 0.1
-    tb_range = float_range(0.8, 20, 0.4)   # 193  if step = 0.1
-    cr_range = float_range(0.8, 5.0, 0.2)  # 43 if step = 0.1
+    na_range = float_range(120, 150, 3)  # 31 if step = 1
+    inr_range = float_range(0.8, 4.0, 0.3)   # 41 if step = 0.1
+    tb_range = float_range(0.8, 20, 0.5)   # 193  if step = 0.1
+    cr_range = float_range(0.8, 5.0, 0.3)  # 43 if step = 0.1
     # fixme - maybe should do @pytest.mark.parametrize but I don't know how to use it yet.
     # 8189952 elements in the product if steps as above takes 13 sec = 630k / sec
     # steps increased --> 263424 throwaways

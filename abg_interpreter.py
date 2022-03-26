@@ -76,7 +76,7 @@ cral_top = Parabola(CRALT, C, [7.475, 16])  # hard to read
 cral_bot = Parabola(CRALB, D, [7.42, 15])  # hard to read
 
 
-def cmp_func(y, behavior, f, x):
+def cmp_func(y: float, behavior: str, f, x: float):
     if behavior == 'less':
         return y < f(x)
     elif behavior == 'greater':
