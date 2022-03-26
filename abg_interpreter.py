@@ -141,8 +141,5 @@ if __name__ == '__main__':
     print("norm ", interpret(7.4, 24))  # normal fixme - "ignore" should test x < > vertical line?
     print("mac  ", interpret(7.2, 8))  # mac  fixme - has malk also
     print("arac ", interpret(7.125, 27))  # arac -  fixme aralk
-    print("extre", interpret(7.11, 28))  # extreme
-    print("crac ", interpret(7.35, 36))  # crac
     print("malk ", interpret(7.55, 40))  # malk fixme does not detect
     print("aralk", interpret(7.6, 20))  # aralk fixme 3 answers
-    print("cralk", interpret(7.45, 16))  # cralk

@@ -18,6 +18,19 @@ def test_region():
     assert chronic_resp_alkalosis_reg.contains(ABG['cralk'])
 
 
-def test_interpret():
-    interpret(ABG['crac'][0], ABG['crac'][1])
-    # fixme count up how many True
+def n_true(region_str: str):
+    interp_dict = interpret(ABG[region_str][0],
+                            ABG[region_str][1])
+    return sum(interp_dict.values())
+
+
+def test_interpret_crac():
+    assert n_true('crac') == 1
+
+
+def test_interpret_extreme():
+    assert n_true('extreme') == 0
+
+
+def test_interpret_cralk():
+    assert n_true('cralk') == 1
