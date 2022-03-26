@@ -30,7 +30,7 @@ class Parabola:
         self.vertex_point = q
 
 
-# I'm naming the "vertex" points where 2 curves meet, clockwise, A-F, starting at 12 o'clock.
+# Naming the "vertex" points where 2 curves meet, clockwise, A-F, starting at 12 o'clock.
 # Source:
 # https://upload.wikimedia.org/wikipedia/commons/1/18/Acid-base_nomogram.svg
 # https://commons.wikimedia.org/wiki/File:Acid-base_nomogram.svg
@@ -57,21 +57,18 @@ ARALB = [7.61, 14]
 CRALT = [7.5, 14]  # fixme - hard to read on the diagram
 CRALB = [7.45, 12]  # hard to read
 
+# Make the curves themselves
+
 mac_top = Parabola(MACT, E, [7.2, 11])
 mac_bot = Parabola(MACB, D, [7.3, 7])
-
 arac_top = Parabola(ARACT, F, [7.25, 28])
 arac_bot = Parabola(ARACB, E, [7.2, 25])
-
 crac_top = Parabola(CRACT, A, [7.4, 45])
 crac_bot = Parabola(CRACB, F, [7.25, 35])
-
 mal_top = Parabola(MALT, A, [7.5, 46])
 mal_bot = Parabola(MALB, B, [7.6, 40])
-
 aral_top = Parabola(ARALT, B, [7.6, 23])
 aral_bot = Parabola(ARALB, C, [7.55, 17])
-
 cral_top = Parabola(CRALT, C, [7.475, 16])  # hard to read
 cral_bot = Parabola(CRALB, D, [7.42, 15])  # hard to read
 
@@ -115,6 +112,7 @@ class Region:
             cmp_func(y, self.ext_behavior, self.ext_line, x) and \
             cmp_func(y, self.vtx_behavior, self.vtx_line, x)
 
+# Make the regions
 
 # fixme - not sure if the ones marked 'ignore' should be that way
 met_acidosis_reg = Region(mac_top, mac_bot, 'ignore', 'less')
