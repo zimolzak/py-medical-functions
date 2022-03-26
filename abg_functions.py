@@ -1,7 +1,8 @@
 import numpy as np
 
+
 class Parabola:
-    def __init__(self, p, q, r):
+    def __init__(self, p: list, q: list, r: list):
         """Define a parabolic curve from 3 points.
 
         Given points are x1,y1 .. x3,y3.
@@ -13,6 +14,9 @@ class Parabola:
         q should be an interior "vertex" point
         r should be midpoint
         """
+
+        if len(p) != len(q) != len(r) != 2:
+            raise ValueError
 
         x1, y1 = p
         x2, y2 = q
