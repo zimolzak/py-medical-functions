@@ -1,7 +1,7 @@
-from abg_interpreter import met_acidosis_reg, met_alkalosis_reg,\
+from abg_data import met_acidosis_reg, met_alkalosis_reg,\
     acute_resp_acidosis_reg, acute_resp_alkalosis_reg,\
-    chronic_resp_alkalosis_reg, chronic_resp_acidosis_reg,\
-    interpret
+    chronic_resp_alkalosis_reg, chronic_resp_acidosis_reg
+from abg_interpreter import interpret
 
 
 ABG = {'mac': [7.2, 8], 'arac': [7.125, 27], 'extreme': [7.11, 28],
