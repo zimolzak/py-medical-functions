@@ -138,15 +138,6 @@ def interpret(ph, bicarb, d=None):
 
 
 if __name__ == '__main__':
-    print("t", met_acidosis_reg.contains([7.2, 8]))  # fixme - turn this into a test
-    print("t", acute_resp_acidosis_reg.contains([7.125, 27]))
-    print("f", acute_resp_acidosis_reg.contains([7.11, 28]))  # expect false
-    print("t", chronic_resp_acidosis_reg.contains([7.35, 36]))
-    print("t", met_alkalosis_reg.contains([7.55, 40]))
-    print("t", acute_resp_alkalosis_reg.contains([7.6, 20]))
-    print("t", chronic_resp_alkalosis_reg.contains([7.45, 16]))
-    print()
-
     print("norm ", interpret(7.4, 24))  # normal fixme - "ignore" should test x < > vertical line?
     print("mac  ", interpret(7.2, 8))  # mac  fixme - has malk also
     print("arac ", interpret(7.125, 27))  # arac -  fixme aralk
