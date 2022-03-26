@@ -2,17 +2,27 @@ import numpy as np
 
 
 class Parabola:
+    coefficients: np.ndarray
+    a: float
+    b: float
+    c: float
+    extreme_point: list
+    vertex_point: list
+
     def __init__(self, p: list, q: list, r: list):
         """Define a parabolic curve from 3 points.
 
         Given points are x1,y1 .. x3,y3.
-        Want to find coeffs a, b, c for general eqn y = a x^2 + b x + c .
-        Do this by solving system (matrix eqn) M * x = n , which is a system of
+        Want to find coefficients a, b, c for general eqn y = a x^2 + b x + c .
+        Do this by solving system (matrix eqn) M * x = n , which is a system of:
         (a * x1^2) + (b * x1) + (c * 1) = y1
 
-        p should be extreme point of an ABG curve
-        q should be an interior "vertex" point
-        r should be midpoint
+        This class exposes several useful things:
+        a function of the parabola, the coefficients, and the endpoints.
+
+        :param p: extreme point of an ABG curve
+        :param q: interior "vertex" point
+        :param r: midpoint of an ABG curve
         """
 
         if len(p) != len(q) != len(r) != 2:
@@ -33,7 +43,15 @@ class Parabola:
         self.vertex_point = q
 
 
-def cmp_func(y: float, behavior: str, f, x: float):
+def cmp_func(y: float, behavior: str, f, x: float) -> bool:
+    """Decide whether y < f(x), but where "<" can be specified.
+
+    :param y: number to compare to f(x)
+    :param behavior: string that can be 'less' or 'greater' or 'ignore' (always True)
+    :param f: function of 1 variable
+    :param x: number at which to evaluate f, and then compare to y
+    :return: boolean, whether or not y > f(x) or y < f(x) etc.
+    """
     if behavior == 'less':
         return y < f(x)
     elif behavior == 'greater':
@@ -45,6 +63,12 @@ def cmp_func(y: float, behavior: str, f, x: float):
 
 
 def line_func(p1: list, p2: list):
+    """Take two x,y points. Return a linear function through them both.
+
+    :param p1: list of [x1, y1] ordered pair (point)
+    :param p2: list of [x2, y2]
+    :return: (linear) function in 1 variable, which passes through both points.
+    """
     assert len(p1) == len(p2) == 2
     x1, y1, = p1
     x2, y2 = p2
@@ -56,7 +80,24 @@ def line_func(p1: list, p2: list):
 
 
 class Region:
+    vtx_behavior: str
+    ext_behavior: str
+
     def __init__(self, top: Parabola, bottom: Parabola, ext_behavior: str, vtx_behavior: str):
+        """Define a region from 2 Parabola objects.
+
+        Parabola objects comprise a curve and 2 endpoints. When you link the extreme and vertex endpoints
+        of 2 parabolas, you get a Region (which has curve-line-curve-line bounds).
+        The _behavior parameters define whether the 2 linear boundaries have region below them or above them.
+        In future we may calculate this; currently we specify.
+
+        Use 'ignore' for behavior if the points are directly above one another.
+
+        :param top: the parabola that makes up the upper edge of the ABG region
+        :param bottom: parabola for the bottom edge of the region
+        :param ext_behavior: string 'less' or 'greater' or ignore, about whether the shaded region is below etc. the segment that connects the 2 extreme points of the parabolas
+        :param vtx_behavior: string about whether the region is below etc. the segment connecting the 2 vertex points
+        """
         self.top_curve = top.f
         self.bottom_curve = bottom.f
         self.ext_line = line_func(top.extreme_point, bottom.extreme_point)
@@ -64,7 +105,12 @@ class Region:
         self.ext_behavior = ext_behavior
         self.vtx_behavior = vtx_behavior
 
-    def contains(self, point: list):
+    def contains(self, point: list) -> bool:
+        """Determine whether the Region object contains the specified point.
+
+        :param point: list of point [x, y] usually pH and bicarbonate, respectively.
+        :return: Boolean, whether the point is inside the region.
+        """
         if len(point) != 2:
             raise IndexError
         x, y = point
