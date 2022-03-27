@@ -1,7 +1,7 @@
 from abg_data import met_acidosis_reg, met_alkalosis_reg,\
     acute_resp_acidosis_reg, acute_resp_alkalosis_reg,\
     chronic_resp_alkalosis_reg, chronic_resp_acidosis_reg
-from abg_interpreter import interpret
+from abg_interpreter import interpret, interpret_as_str
 
 
 ABG = {'mac': [7.2, 8], 'arac': [7.125, 27], 'extreme': [7.11, 28],
@@ -57,3 +57,8 @@ def test_interpret_arac():
 
 def test_interpret_aralk():
     assert n_true('aralk') == 1
+
+
+def test_interpret_as_str():
+    ph, bicarb = ABG['mac']
+    assert interpret_as_str(ph, bicarb) == 'mac'
