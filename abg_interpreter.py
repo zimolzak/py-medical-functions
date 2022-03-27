@@ -27,8 +27,3 @@ def interpret(ph: float, bicarb: float, d: dict = None) -> dict:
             answers[k] = region.contains([ph, bicarb])
         answers['normal'] = False
         return answers
-
-
-if __name__ == '__main__':
-    print("arac ", interpret(7.125, 27))  # arac -  fixme aralk
-    print("aralk", interpret(7.6, 20))  # aralk fixme 2 answers

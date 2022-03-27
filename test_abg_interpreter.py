@@ -49,3 +49,11 @@ def test_interpret_malk():
 
 def test_interpret_normal():
     assert n_true('normal') == 1
+
+
+def test_interpret_arac():
+    assert n_true('arac') == 1
+
+
+def test_interpret_aralk():
+    assert n_true('aralk') == 1
