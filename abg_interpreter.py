@@ -20,10 +20,8 @@ def interpret(ph: float, bicarb: float, d: dict = None) -> dict:
 def interpret_as_str(ph: float, bicarb: float) -> str:
     answers = interpret(ph, bicarb)
     if sum(answers.values()) > 1:
-        raise ValueError
+        raise ValueError("Lab maps to more than 1 disorder??")
     for k, v in answers.items():
         if v:
             return k
-    if sum(answers.values()) != 0:
-        raise ValueError("No 'True' found but sum != 0 ??")
     return "I don't know"

@@ -26,7 +26,7 @@ class Parabola:
         """
 
         if len(p) != len(q) != len(r) != 2:
-            raise ValueError
+            raise ValueError("All points must be 2D: %s %s %s" % (p, q, r))
 
         x1, y1 = p
         x2, y2 = q
@@ -57,7 +57,7 @@ def cmp_func(y: float, behavior: str, f, x: float) -> bool:
     elif behavior == 'greater':
         return y > f(x)
     else:
-        raise ValueError
+        raise ValueError("behavior must be 'less' or 'greater'. Got %s " % behavior)
 
 
 def line_func(p1: list, p2: list):
@@ -105,7 +105,7 @@ class Region:
         :return: Boolean, whether the point is inside the region.
         """
         if len(point) != 2:
-            raise IndexError
+            raise IndexError("Point must be 2D: %s" % point)
         x, y = point
         return self.bottom_curve(x) < y < self.top_curve(x) and \
             cmp_func(y, self.ext_behavior, self.ext_line, x) and \
@@ -135,7 +135,7 @@ class RegionQuad:
 
     def contains(self, point: list) -> bool:
         if len(point) != 2:
-            raise IndexError
+            raise IndexError("Point must be 2D: %s" % point)
         x, y = point
         return self.top12(x) > y > self.bot34(x) and \
             self.top23(x) > y > self.bot41(x)
@@ -144,7 +144,7 @@ class RegionQuad:
 class RegionSimple:
     def __init__(self, xmin, xmax, ymin, ymax):
         if xmin >= xmax or ymin >= ymax:
-            raise ValueError
+            raise ValueError("Must have xmin<xmax and ymin<ymax. Got %s %s %s %s" % (xmin, xmax, ymin, ymax))
         self.xmin = xmin
         self.xmax = xmax
         self.ymin = ymin
@@ -152,7 +152,7 @@ class RegionSimple:
 
     def contains(self, point: list) -> bool:
         if len(point) != 2:
-            raise IndexError
+            raise IndexError("Point must be 2D: %s" % point)
         x, y = point
         return self.xmin <= x <= self.xmax and \
             self.ymin <= y <= self.ymax
