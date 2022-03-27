@@ -50,3 +50,7 @@ chronic_resp_acidosis_reg = Region(crac_top, crac_bot, 'less', 'greater')
 met_alkalosis_reg = Region(mal_top, mal_bot, 'less', 'greater')
 acute_resp_alkalosis_reg = Region(aral_top, aral_bot, 'greater', 'less')
 chronic_resp_alkalosis_reg = RegionQuad(D, C, CRALT, CRALB)
+
+REGION_DICT = {'mac': met_acidosis_reg, 'arac': acute_resp_acidosis_reg,
+             'crac': chronic_resp_acidosis_reg, 'malk': met_alkalosis_reg,
+             'aralk': acute_resp_alkalosis_reg, 'cralk': chronic_resp_alkalosis_reg}

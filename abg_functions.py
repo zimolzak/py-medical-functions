@@ -113,7 +113,21 @@ class Region:
 
 
 class RegionQuad:
-    def __init__(self, p1, p2, p3, p4):
+    def __init__(self, p1: list, p2: list, p3: list, p4: list):
+        """Define a quadrilateral region.
+
+        p1 p2 p3 must define the top edges.
+        p3 p4 p1 must define the bottom edges.
+
+                   p2
+             p1          p3
+                   p4
+
+        :param p1: Start of one upper segment
+        :param p2: End of 1st upper seg, start of 2nd upper
+        :param p3: End of 2nd upper, start of 1st bottom seg.
+        :param p4: End of 1st bottom seg, start of 2nd bottom
+        """
         self.top12 = line_func(p1, p2)
         self.top23 = line_func(p2, p3)
         self.bot34 = line_func(p3, p4)
@@ -125,3 +139,20 @@ class RegionQuad:
         x, y = point
         return self.top12(x) > y > self.bot34(x) and \
             self.top23(x) > y > self.bot41(x)
+
+
+class RegionSimple:
+    def __init__(self, xmin, xmax, ymin, ymax):
+        if xmin >= xmax or ymin >= ymax:
+            raise ValueError
+        self.xmin = xmin
+        self.xmax = xmax
+        self.ymin = ymin
+        self.ymax = ymax
+
+    def contains(self, point: list) -> bool:
+        if len(point) != 2:
+            raise IndexError
+        x, y = point
+        return self.xmin <= x <= self.xmax and \
+            self.ymin <= y <= self.ymax
