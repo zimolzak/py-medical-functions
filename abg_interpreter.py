@@ -11,18 +11,10 @@ def interpret(ph: float, bicarb: float, d: dict = None) -> dict:
     """
     if d is None:
         d = REGION_DICT
-    if 7.35 <= ph <= 7.45 and 22 <= bicarb <= 24:
-        # normal
-        k = d.keys()
-        answers = dict(zip(k, [False] * len(k)))
-        answers['normal'] = True
-        return answers
-    else:
-        answers = {}
-        for k, region in d.items():
-            answers[k] = region.contains([ph, bicarb])
-        answers['normal'] = False
-        return answers
+    answers = {}
+    for k, region in d.items():
+        answers[k] = region.contains([ph, bicarb])
+    return answers
 
 
 def interpret_as_str(ph: float, bicarb: float, d: dict = None) -> str:
