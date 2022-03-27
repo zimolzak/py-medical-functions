@@ -27,38 +27,42 @@ def n_true(region_str: str):
     return sum(interp_dict.values())
 
 
+def both_tests(s: str) -> None:
+    ph, bicarb = ABG[s]
+    assert n_true(s) == 1
+    assert interpret_as_str(ph, bicarb) == s
+
+
 def test_interpret_crac():
-    assert n_true('crac') == 1
+    both_tests('crac')
 
 
 def test_interpret_extreme():
-    assert n_true('extreme') == 0
+    e = 'extreme'
+    ph, bicarb = ABG[e]
+    assert n_true(e) == 0
+    assert interpret_as_str(ph, bicarb) == "I don't know"
 
 
 def test_interpret_cralk():
-    assert n_true('cralk') == 1
+    both_tests('cralk')
 
 
 def test_interpret_mac():
-    assert n_true('mac') == 1
+    both_tests('mac')
 
 
 def test_interpret_malk():
-    assert n_true('malk') == 1
+    both_tests('malk')
 
 
 def test_interpret_normal():
-    assert n_true('normal') == 1
+    both_tests('normal')
 
 
 def test_interpret_arac():
-    assert n_true('arac') == 1
+    both_tests('arac')
 
 
 def test_interpret_aralk():
-    assert n_true('aralk') == 1
-
-
-def test_interpret_as_str():
-    ph, bicarb = ABG['mac']
-    assert interpret_as_str(ph, bicarb) == 'mac'
+    both_tests('aralk')
