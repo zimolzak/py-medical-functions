@@ -8,10 +8,10 @@ from abg_functions import Region, Parabola
 
 A = [7.44, 31]
 B = [7.46, 26]
-C = [7.46, 20]
+C = [7.46, 20]  # note directly below B
 D = [7.4, 16]
 E = [7.35, 23]
-F = [7.35, 27]
+F = [7.35, 27]  # directly above E
 
 # Naming extreme points of curves
 

@@ -2,7 +2,7 @@ import numpy as np
 
 
 class Parabola:
-    coefficients: np.ndarray
+    coefficients: np.ndarray  # Python 3.5 doesn't like this
     a: float
     b: float
     c: float

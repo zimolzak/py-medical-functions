@@ -5,10 +5,13 @@ from abg_interpreter import interpret
 
 
 ABG = {'mac': [7.2, 8], 'arac': [7.125, 27], 'extreme': [7.11, 28],
-       'crac': [7.35, 36], 'malk': [7.55, 40], 'aralk': [7.6, 20], 'cralk': [7.45, 16]}
+       'crac': [7.35, 36], 'malk': [7.55, 40],
+       'aralk': [7.6, 20], 'cralk': [7.45, 16],
+       'normal': [7.4, 24]
+       }
 
 
-def test_region():
+def test_region_contains():
     assert met_acidosis_reg.contains(ABG['mac'])
     assert acute_resp_acidosis_reg.contains(ABG['arac'])
     assert not acute_resp_acidosis_reg.contains(ABG['extreme'])
@@ -34,3 +37,15 @@ def test_interpret_extreme():
 
 def test_interpret_cralk():
     assert n_true('cralk') == 1
+
+
+def test_interpret_mac():
+    assert n_true('mac') == 1
+
+
+def test_interpret_malk():
+    assert n_true('malk') == 1
+
+
+def test_interpret_normal():
+    assert n_true('normal') == 1
