@@ -117,3 +117,18 @@ class Region:
         return self.bottom_curve(x) < y < self.top_curve(x) and \
             cmp_func(y, self.ext_behavior, self.ext_line, x) and \
             cmp_func(y, self.vtx_behavior, self.vtx_line, x)
+
+
+class RegionQuad:
+    def __init__(self, p1, p2, p3, p4):
+        self.top12 = line_func(p1, p2)
+        self.top23 = line_func(p2, p3)
+        self.bot34 = line_func(p3, p4)
+        self.bot41 = line_func(p4, p1)
+
+    def contains(self, point: list) -> bool:
+        if len(point) != 2:
+            raise IndexError
+        x, y = point
+        return self.top12(x) > y > self.bot34(x) and \
+            self.top23(x) > y > self.bot41(x)

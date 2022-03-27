@@ -1,4 +1,4 @@
-from abg_functions import Region, Parabola
+from abg_functions import Region, Parabola, RegionQuad
 
 # Naming the "vertex" points where 2 curves meet, clockwise, A-F, starting at 12 o'clock.
 
@@ -9,7 +9,7 @@ from abg_functions import Region, Parabola
 A = [7.44, 31]
 B = [7.46, 26]
 C = [7.46, 20]  # note directly below B
-D = [7.4, 16]
+D = [7.41, 17]
 E = [7.35, 23]
 F = [7.35, 27]  # directly above E
 
@@ -25,8 +25,8 @@ MALT = [7.51, 54]
 MALB = [7.625, 54]
 ARALT = [7.73, 19]
 ARALB = [7.61, 14]
-CRALT = [7.5, 14]  # fixme - hard to read on the diagram
-CRALB = [7.45, 12]  # hard to read
+CRALT = [7.485, 14]
+CRALB = [7.44, 13]
 
 # Make the curves themselves
 
@@ -50,4 +50,4 @@ acute_resp_acidosis_reg = Region(arac_top, arac_bot, 'less', 'ignore')
 chronic_resp_acidosis_reg = Region(crac_top, crac_bot, 'less', 'greater')
 met_alkalosis_reg = Region(mal_top, mal_bot, 'less', 'greater')
 acute_resp_alkalosis_reg = Region(aral_top, aral_bot, 'greater', 'ignore')
-chronic_resp_alkalosis_reg = Region(cral_top, cral_bot, 'greater', 'less')
+chronic_resp_alkalosis_reg = RegionQuad(D, C, CRALT, CRALB)

@@ -8,7 +8,7 @@ def interpret(ph: float, bicarb: float, d: dict = None) -> dict:
 
     :param ph: Measured pH of the ABG
     :param bicarb: Bicarbonate level of the ABG
-    :param d: Optional custom dict of abnormality names and Region objects
+    :param d: Optional custom dict of abnormality names and Region objects (need not be Region, just obj with .contains() method)
     :return: Dict of names and True/False values (whether the pH and bicarb fall within each region)
     """
     if d is None:
@@ -31,4 +31,4 @@ def interpret(ph: float, bicarb: float, d: dict = None) -> dict:
 
 if __name__ == '__main__':
     print("arac ", interpret(7.125, 27))  # arac -  fixme aralk
-    print("aralk", interpret(7.6, 20))  # aralk fixme 3 answers
+    print("aralk", interpret(7.6, 20))  # aralk fixme 2 answers
