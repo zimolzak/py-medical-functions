@@ -10,32 +10,27 @@ x, y = np.mgrid[7.0:7.8:0.02, 0:56:1]
 test_space = np.vstack((x.ravel(), y.ravel()))
 test_space = test_space.transpose()
 
-answer_space = []
-for lab in test_space:
+answer_space = np.zeros(test_space.shape[0])
+for i, lab in enumerate(test_space):
     ph, bicarb = lab
     try:
         s = interpret_as_str(ph, bicarb)
     except ValueError as e:
         print(ph, bicarb, e)
-    i = L.index(s)
-    answer_space.append(i)
+    x = L.index(s)  # fixme - might have to define 's' when exception?
+    answer_space[i] = x
 
 A = np.array(answer_space)
+
+colors = ['black', 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'grey']
 
 for i in range(len(L)):
     indices = np.nonzero(A == i)
     yi = test_space[indices, 1]
     xi = test_space[indices, 0]
-    plt.plot(xi, yi, 'o')
-    # print(i)
-    # print(np.argwhere(A == i))
-    # print()
-    # print()
+    plt.plot(xi, yi, marker='o', color=colors[i])
 
 plt.savefig('outoutout.png')
-
-
-#  print(A)
 
 # over = test_space[:, 0] > 7.35
 # under = test_space[:, 0] < 7.45
