@@ -7,16 +7,16 @@ from abg_functions import Region, Parabola, RegionQuad
 # https://commons.wikimedia.org/wiki/File:Acid-base_nomogram.svg
 
 A = [7.44, 31]
-B = [7.46, 26]
-C = [7.46, 20]  # note directly below B
+B = [7.461, 26]
+C = [7.46, 20]  # NEARLY directly below B
 D = [7.41, 17]
 E = [7.35, 23]
-F = [7.35, 27]  # directly above E
+F = [7.351, 27]  # NEARLY directly above E
 
 # Naming extreme points of curves
 
-MACT = [7, 5]
-MACB = [7, 3]
+MACT = [7.001, 5]
+MACB = [7, 3]  # directly below
 ARACT = [7.15, 30]
 ARACB = [7.1, 26]
 CRACT = [7.325, 54]
@@ -45,9 +45,9 @@ cral_bot = Parabola(CRALB, D, [7.42, 15])  # hard to read
 
 # Regions
 # fixme - not sure if the ones marked 'ignore' should be that way
-met_acidosis_reg = Region(mac_top, mac_bot, 'ignore', 'less')
-acute_resp_acidosis_reg = Region(arac_top, arac_bot, 'less', 'ignore')
+met_acidosis_reg = Region(mac_top, mac_bot, 'less', 'less')
+acute_resp_acidosis_reg = Region(arac_top, arac_bot, 'less', 'greater')
 chronic_resp_acidosis_reg = Region(crac_top, crac_bot, 'less', 'greater')
 met_alkalosis_reg = Region(mal_top, mal_bot, 'less', 'greater')
-acute_resp_alkalosis_reg = Region(aral_top, aral_bot, 'greater', 'ignore')
+acute_resp_alkalosis_reg = Region(aral_top, aral_bot, 'greater', 'less')
 chronic_resp_alkalosis_reg = RegionQuad(D, C, CRALT, CRALB)
