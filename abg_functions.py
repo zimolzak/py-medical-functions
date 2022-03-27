@@ -47,7 +47,7 @@ def cmp_func(y: float, behavior: str, f, x: float) -> bool:
     """Decide whether y < f(x), but where "<" can be specified.
 
     :param y: number to compare to f(x)
-    :param behavior: string that can be 'less' or 'greater' or 'ignore' (always True)
+    :param behavior: string that can be 'less' or 'greater'
     :param f: function of 1 variable
     :param x: number at which to evaluate f, and then compare to y
     :return: boolean, whether or not y > f(x) or y < f(x) etc.
@@ -56,8 +56,6 @@ def cmp_func(y: float, behavior: str, f, x: float) -> bool:
         return y < f(x)
     elif behavior == 'greater':
         return y > f(x)
-    elif behavior == 'ignore':
-        return True  # fixme - might be wrong to do it this way
     else:
         raise ValueError
 
@@ -72,11 +70,8 @@ def line_func(p1: list, p2: list):
     assert len(p1) == len(p2) == 2
     x1, y1, = p1
     x2, y2 = p2
-    if x1 == x2:
-        return lambda x: np.inf  # fixme - does it have to be +/- inf?
-    else:
-        m = (y1 - y2) / (x1 - x2)
-        return lambda x: m * (x - x1) + y1
+    m = (y1 - y2) / (x1 - x2)  # let it raise error if x1 == x2
+    return lambda x: m * (x - x1) + y1
 
 
 class Region:
@@ -91,12 +86,10 @@ class Region:
         The _behavior parameters define whether the 2 linear boundaries have region below them or above them.
         In future we may calculate this; currently we specify.
 
-        Use 'ignore' for behavior if the points are directly above one another.
-
         :param top: the parabola that makes up the upper edge of the ABG region
         :param bottom: parabola for the bottom edge of the region
-        :param ext_behavior: string 'less' or 'greater' or ignore, about whether the shaded region is below etc. the segment that connects the 2 extreme points of the parabolas
-        :param vtx_behavior: string about whether the region is below etc. the segment connecting the 2 vertex points
+        :param ext_behavior: pass to cmp_func() whether region is </> segment connecting extreme points of the parabolas
+        :param vtx_behavior: whether the region is below/above the segment connecting the 2 vertex points
         """
         self.top_curve = top.f
         self.bottom_curve = bottom.f

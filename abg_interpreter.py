@@ -8,7 +8,7 @@ def interpret(ph: float, bicarb: float, d: dict = None) -> dict:
 
     :param ph: Measured pH of the ABG
     :param bicarb: Bicarbonate level of the ABG
-    :param d: Optional custom dict of abnormality names and Region objects (need not be Region, just obj with .contains() method)
+    :param d: dict of abnormality names and Region objects (need not be Region, just obj with .contains() method)
     :return: Dict of names and True/False values (whether the pH and bicarb fall within each region)
     """
     if d is None:

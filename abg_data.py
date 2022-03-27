@@ -44,7 +44,6 @@ cral_top = Parabola(CRALT, C, [7.475, 16])  # hard to read
 cral_bot = Parabola(CRALB, D, [7.42, 15])  # hard to read
 
 # Regions
-# fixme - not sure if the ones marked 'ignore' should be that way
 met_acidosis_reg = Region(mac_top, mac_bot, 'less', 'less')
 acute_resp_acidosis_reg = Region(arac_top, arac_bot, 'less', 'greater')
 chronic_resp_acidosis_reg = Region(crac_top, crac_bot, 'less', 'greater')
