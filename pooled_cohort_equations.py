@@ -147,5 +147,5 @@ def pce(age: float, sex: str, race: str, tc: float, hdl: float, sbp: float, trea
     return 1 - specific_baseline ** (np.exp(individual_sum - specific_mean))
 
 
-print(pce(55, 'F', 'AA', 200, 50, 120, False, False, False))
-print(pce(55, 'F', 'W', 200, 50, 120, False, False, False))
+print(pce(55, 'F', 'AA', 213, 50, 120, False, False, False))
+print(pce(55, 'F', 'W', 213, 50, 120, False, False, False))
