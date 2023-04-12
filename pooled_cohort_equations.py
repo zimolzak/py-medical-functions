@@ -12,7 +12,6 @@ Mainly Table A in paper, or Table 4 in full work group report Word doc.
 
 import numpy as np
 
-
 """
 Ln Age (y)
 Ln Age, Squared
@@ -88,7 +87,8 @@ af_am_men = [
 ]
 
 
-def pce(age: float, sex: str, race: str, tc: float, hdl: float, sbp: float, treated: bool, smoker: bool, diabetes: bool) -> float:
+def pce(age: float, sex: str, race: str, tc: float, hdl: float, sbp: float, treated: bool, smoker: bool,
+        diabetes: bool) -> float:
     """Calculate 10-year risk for hard ASCVD
 
     :param race:
@@ -104,9 +104,20 @@ def pce(age: float, sex: str, race: str, tc: float, hdl: float, sbp: float, trea
     """
 
     if treated:
-        pass
+        log_tbp = np.log(sbp)
+        log_ubp = 0
+    else:
+        log_tbp = 0
+        log_ubp = np.log(sbp)
 
     if sex == 'F':
+        if race == 'W':
+            coefficients = white_women
+        elif race == 'AA':
+            coefficients = af_am_women
+        else:
+            raise ValueError('race {} should be "W" or "AA"'.format(race))
+
         values = [
             np.log(age),
             np.log(age) ** 2,
@@ -123,5 +134,13 @@ def pce(age: float, sex: str, race: str, tc: float, hdl: float, sbp: float, trea
             diabetes
         ]
 
+    individual_sum = np.dot(values, coefficients)
+    means = {'WW': -29.18, 'AAW': 86.61, 'WM': 61.18, 'AAM': 18.97}
+    baselines = {'WW': 0.9665, 'AAW': 0.9533, 'WM': 0.9144, 'AAM': 0.8954}
+    specific_mean = means[race + sex]
+    specific_baseline = baselines[race + sex]
 
-    return 0.1
+    return 1 - specific_baseline ** (np.exp(individual_sum - specific_mean))
+
+
+pce(55, 'F', 'AA', 200, 50, 120, False, False, False)
