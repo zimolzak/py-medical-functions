@@ -117,7 +117,6 @@ def pce(age: float, sex: str, race: str, tc: float, hdl: float, sbp: float, trea
             coefficients = af_am_women
         else:
             raise ValueError('race {} should be "W" or "AA"'.format(race))
-
         values = [
             np.log(age),
             np.log(age) ** 2,
@@ -133,13 +132,37 @@ def pce(age: float, sex: str, race: str, tc: float, hdl: float, sbp: float, trea
             np.log(age) * smoker,
             diabetes
         ]
+
     elif sex == 'M':
-        raise NotImplementedError  # fixme
+        if race == 'W':
+            coefficients = white_men
+        elif race == 'AA':
+            coefficients = af_am_men
+        else:
+            raise ValueError('race {} should be "W" or "AA"'.format(race))
+        values = [
+            # Note the values deliberated commented out, which don't enter the model for men.
+
+            np.log(age),
+            # np.log(age) ** 2,
+            np.log(tc),
+            np.log(age) * np.log(tc),
+            np.log(hdl),
+            np.log(age) * np.log(hdl),
+            log_tbp,
+            # np.log(age) * log_tbp,
+            log_ubp,
+            # np.log(age) * log_ubp,
+            smoker,
+            np.log(age) * smoker,
+            diabetes
+        ]
+
     else:
         raise ValueError('sex {} should be "M" or "F"'.format(sex))
 
     individual_sum = np.dot(values, coefficients)
-    means = {'WF': -29.18, 'AAF': 86.61, 'WM': 61.18, 'AAM': 18.97}
+    means = {'WF': -29.18, 'AAF': 86.61, 'WM': 61.18, 'AAM': 19.54}
     baselines = {'WF': 0.9665, 'AAF': 0.9533, 'WM': 0.9144, 'AAM': 0.8954}
     specific_mean = means[race + sex]
     specific_baseline = baselines[race + sex]
@@ -147,5 +170,7 @@ def pce(age: float, sex: str, race: str, tc: float, hdl: float, sbp: float, trea
     return 1 - specific_baseline ** (np.exp(individual_sum - specific_mean))
 
 
-print(pce(55, 'F', 'AA', 213, 50, 120, False, False, False))
 print(pce(55, 'F', 'W', 213, 50, 120, False, False, False))
+print(pce(55, 'F', 'AA', 213, 50, 120, False, False, False))
+print(pce(55, 'M', 'W', 213, 50, 120, False, False, False))
+print(pce(55, 'M', 'AA', 213, 50, 120, False, False, False))
