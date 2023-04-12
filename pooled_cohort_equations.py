@@ -1,32 +1,19 @@
 """
+Source:
+
 Goff DC Jr, Lloyd-Jones DM, Bennett G, et al.
 2013 ACC/AHA guideline on the assessment of cardiovascular risk:
-a report of the American College of Cardiology/American Heart Association Task Force on Practice Guidelines
+A report of the American College of Cardiology/American Heart Association Task Force on Practice Guidelines
 [published correction appears in Circulation. 2014 Jun 24;129(25 Suppl 2):S74-5].
 Circulation. 2014;129(25 Suppl 2):S49-S73.
 doi:10.1161/01.cir.0000437741.48606.98
 https://pubmed.ncbi.nlm.nih.gov/24222018/
 
-Mainly Table A in paper, or Table 4 in full work group report Word doc.
+Mainly taken from Table 4 in full work group report Word doc.
+See also Table A in main paper.
 """
 
 import numpy as np
-
-"""
-Ln Age (y)
-Ln Age, Squared
-Ln Total Cholesterol (mg/dL)
-Ln Age×Ln Total Cholesterol
-Ln HDL-C (mg/dL)
-Ln Age×Ln HDL-C 
-Log Treated Systolic BP (mm Hg)
-Log Age×Log Treated Systolic BP
-Log Untreated Systolic BP (mm Hg)
-Log Age×Log Untreated Systolic BP
-Current Smoker (1=Yes, 0=No)
-Log Age×Current Smoker
-Diabetes (1=Yes, 0=No
-"""
 
 white_women = [
     -29.799,  # age
@@ -91,16 +78,16 @@ def pce(age: float, sex: str, race: str, tc: float, hdl: float, sbp: float, trea
         diabetes: bool) -> float:
     """Calculate 10-year risk for hard ASCVD
 
-    :param race:
-    :param sex:
+    :param race: Race, must be 'W' or 'AA'
+    :param sex: Sex, must be 'F' or 'M'
     :param age: Age in years
     :param tc: Total cholesterol, mg/dL
     :param hdl: HDL cholesterol, mg/dL
-    :param sbp: systolic blood pressure, mmHg
-    :param treated: is blood pressure treated?
-    :param smoker: current smoker?
-    :param diabetes: has diabetes?
-    :return:
+    :param sbp: Systolic blood pressure, mmHg
+    :param treated: Is blood pressure treated?
+    :param smoker: Current smoker?
+    :param diabetes: Has diabetes?
+    :return: Risk, as a proportion, ranging from 0 to 1
     """
 
     if treated:
@@ -141,7 +128,7 @@ def pce(age: float, sex: str, race: str, tc: float, hdl: float, sbp: float, trea
         else:
             raise ValueError('race {} should be "W" or "AA"'.format(race))
         values = [
-            # Note the values deliberated commented out, which don't enter the model for men.
+            # Note the values deliberately commented out, which don't enter the model for men.
 
             np.log(age),
             # np.log(age) ** 2,
