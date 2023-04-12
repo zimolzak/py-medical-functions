@@ -133,14 +133,19 @@ def pce(age: float, sex: str, race: str, tc: float, hdl: float, sbp: float, trea
             np.log(age) * smoker,
             diabetes
         ]
+    elif sex == 'M':
+        raise NotImplementedError  # fixme
+    else:
+        raise ValueError('sex {} should be "M" or "F"'.format(sex))
 
     individual_sum = np.dot(values, coefficients)
-    means = {'WW': -29.18, 'AAW': 86.61, 'WM': 61.18, 'AAM': 18.97}
-    baselines = {'WW': 0.9665, 'AAW': 0.9533, 'WM': 0.9144, 'AAM': 0.8954}
+    means = {'WF': -29.18, 'AAF': 86.61, 'WM': 61.18, 'AAM': 18.97}
+    baselines = {'WF': 0.9665, 'AAF': 0.9533, 'WM': 0.9144, 'AAM': 0.8954}
     specific_mean = means[race + sex]
     specific_baseline = baselines[race + sex]
 
     return 1 - specific_baseline ** (np.exp(individual_sum - specific_mean))
 
 
-pce(55, 'F', 'AA', 200, 50, 120, False, False, False)
+print(pce(55, 'F', 'AA', 200, 50, 120, False, False, False))
+print(pce(55, 'F', 'W', 200, 50, 120, False, False, False))
