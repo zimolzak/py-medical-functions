@@ -10,6 +10,9 @@ https://pubmed.ncbi.nlm.nih.gov/24222018/
 Mainly Table A in paper, or Table 4 in full work group report Word doc.
 """
 
+import numpy as np
+
+
 """
 Ln Age (y)
 Ln Age, Squared
@@ -83,3 +86,42 @@ af_am_men = [
     'N/A',
     0.645
 ]
+
+
+def pce(age: float, sex: str, race: str, tc: float, hdl: float, sbp: float, treated: bool, smoker: bool, diabetes: bool) -> float:
+    """Calculate 10-year risk for hard ASCVD
+
+    :param race:
+    :param sex:
+    :param age: Age in years
+    :param tc: Total cholesterol, mg/dL
+    :param hdl: HDL cholesterol, mg/dL
+    :param sbp: systolic blood pressure, mmHg
+    :param treated: is blood pressure treated?
+    :param smoker: current smoker?
+    :param diabetes: has diabetes?
+    :return:
+    """
+
+    if treated:
+        pass
+
+    if sex == 'F':
+        values = [
+            np.log(age),
+            np.log(age) ** 2,
+            np.log(tc),
+            np.log(age) * np.log(tc),
+            np.log(hdl),
+            np.log(age) * np.log(hdl),
+            log_tbp,
+            np.log(age) * log_tbp,
+            log_ubp,
+            np.log(age) * log_ubp,
+            smoker,
+            np.log(age) * smoker,
+            diabetes
+        ]
+
+
+    return 0.1
