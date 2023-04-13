@@ -162,3 +162,4 @@ if __name__ == '__main__':
     print(pce(55, 'F', 'AA', 213, 50, 120, False, False, False))
     print(pce(55, 'M', 'W', 213, 50, 120, False, False, False))
     print(pce(55, 'M', 'AA', 213, 50, 120, False, False, False))
+    print(pce(70, 'M', 'AA', 220, 20, 140, True, True, True))
