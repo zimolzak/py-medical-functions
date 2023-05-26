@@ -4,11 +4,14 @@ from abg_interpreter import interpret_as_str
 from abg_data import REGION_DICT
 
 L = ["I don't know"] + list(REGION_DICT.keys())
+print("Possible interpreter answers are:")
 print(L)
 
 x, y = np.mgrid[7.0:7.8:0.02, 0:56:1]
 test_space = np.vstack((x.ravel(), y.ravel()))
 test_space = test_space.transpose()
+print("Matrix of points to test has shape {}".format(test_space.shape))
+print()
 
 answer_space = np.zeros(test_space.shape[0])
 for i, lab in enumerate(test_space):
@@ -16,7 +19,7 @@ for i, lab in enumerate(test_space):
     try:
         s = interpret_as_str(ph, bicarb)
     except ValueError as e:
-        print(ph, bicarb, e)
+        print("Exception at", ph, bicarb, ":", e)
     x = L.index(s)  # fixme - might have to define 's' when exception?
     answer_space[i] = x
 
